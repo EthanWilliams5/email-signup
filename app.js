@@ -5,6 +5,9 @@ const https = require("https");
 const { post } = require("request");
 
 const app = express();
+const API_KEY = process.env.API_KEY
+const AUDIENCE_ID = process.env.AUDIENCE_ID
+
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({extended:true}))
 
@@ -35,10 +38,10 @@ app.post("/", function(req, res) {
   })
 
   const jsonData = JSON.stringify(data)
-  const url = "https://us11.api.mailchimp.com/3.0/lists/4169ee5b8b"
+  const url = `https://us11.api.mailchimp.com/3.0/lists/${process.env.AUDIENCE_ID}`
   const options = {
     method: "post",
-    auth: "ethan1:63u8d2bce88cf947d1df8fb71c71031ed-us11"
+    auth: `ethan1:${process.env.API_KEY}`
   }
 
   const request = https.request(url, options, function(response) {
@@ -63,7 +66,3 @@ app.listen(3000, function() {
   console.log("Running on port 3000.")
 })
 
-// API Key
-// 638d2bce88cf947d1df8fb71c71031ed-us11
-// Audience Id
-// 4169ee5b8b
